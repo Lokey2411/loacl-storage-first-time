@@ -8,10 +8,15 @@ import { useCallback } from "react";
 import { useEffect } from "react";
 
 const TODO_APP_STORAGE_KEY = "work";
+document.body.onload = () => {
+  console.log(localStorage);
+};
 
 function App() {
   //Khởi tạo todo list
-  const [todoList, setTodoList] = useState([]);
+  const [todoList, setTodoList] = useState(
+    JSON.parse(localStorage.getItem(TODO_APP_STORAGE_KEY))
+  );
   const [textInput, setTextInput] = useState("");
   useEffect(() => {
     const storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
@@ -45,10 +50,11 @@ function App() {
         {
           id: v4(),
           name: textInput,
-          isCompleted: false,
+          iscompleted: false,
         },
         ...todoList,
       ]);
+
       //THêm vào cuối danh sách
       /*
       setTodoList([
@@ -60,26 +66,33 @@ function App() {
       */
       //nhập xong xoá text input đi
       setTextInput("");
+      document.getElementById("erase-parent").style.display = "block";
     },
     [textInput, todoList]
   );
   const onCheckButtonClick = useCallback((id) => {
     setTodoList((prevState) =>
       prevState.map((todo) =>
-        todo.id === id ? { ...todo, isCompleted: true } : todo
+        todo.id === id ? { ...todo, iscompleted: true } : todo
       )
     );
   });
-
+  const onEraseButtonClick = () => {
+    localStorage.clear();
+    setTodoList([]);
+    document.getElementById("erase-parent").style.display = "none";
+  };
   return (
     <div className="App">
       <h3>Danh sách cần làm</h3>
       <Textfield
+        className="add-todo"
         name="add-todo"
         placeholder="Thêm việc cần làm"
         elemAfterInput={
           //Thêm phần tử vào cuối thẻ input
           <Button
+            className="add"
             isDisabled={!textInput}
             appearance="primary"
             onClick={onAddButtonClick}
@@ -97,6 +110,13 @@ function App() {
         todoList={todoList}
         onCheckButtonClick={onCheckButtonClick}
       ></TodoList>
+      {!!todoList && (
+        <div className="erase" id="erase-parent">
+          <Button id="erase" className="erase" onClick={onEraseButtonClick}>
+            Xoá
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

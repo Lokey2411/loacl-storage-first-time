@@ -9,9 +9,11 @@ const ButtonStyled = styled(Button)`
   &,
   &:hover {
     ${(p) =>
-      p.isCompleted &&
+      p.iscompleted &&
       css`
-        text-decoration: line-through;
+        .css-udadfb-ButtonBase {
+          text-decoration: line-through;
+        }
       `}
   }
   &:hover {
@@ -32,9 +34,10 @@ const ButtonStyled = styled(Button)`
 export default function Todo({ todo, onCheckButtonClick }) {
   return (
     <ButtonStyled
-      isCompleted={todo.isCompleted}
+      key={todo.id}
+      iscompleted={todo.iscompleted}
       iconAfter={
-        !todo.isCompleted && (
+        !todo.iscompleted && (
           <span
             className="check-icon"
             onClick={() => onCheckButtonClick(todo.id)}

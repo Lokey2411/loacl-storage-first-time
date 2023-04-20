@@ -11,3 +11,38 @@ body {
 #root {
   width: 100%;
 }
+.erase {
+  cursor: pointer;
+  width: fit-content;
+  padding: 8px;
+  display: block;
+  margin: 0 auto;
+}
+.add {
+  margin-right: 3px;
+}
+.erase:hover {
+  opacity: 0.6;
+}
+#erase {
+  margin-top: 5px;
+  background: #f00;
+  border-radius: 50%;
+}
+
+#erase-completed {
+  margin-top: 5px;
+  background: #f00;
+  border-radius: 500px;
+  margin-right: 5px;
+}
+#erase span,
+#erase-completed span {
+  color: #fff;
+}
+.add-todo {
+  padding: 4px;
+}
+.App {
+  border-radius: 500px;
+}
